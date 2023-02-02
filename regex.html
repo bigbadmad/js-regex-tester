@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Mad's JS Regex tester</title>
+        <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+        <style type="text/css" media="screen">
+            * {
+                font-family:'Karla', sans-serif;
+                font-size:22px;
+                color:#fff;
+            }
+            body {
+                background-color:#222;
+            }
+            label {
+                display:block;
+                margin-bottom:3px;
+            }
+            textarea {
+                display:block;
+                width:100%;
+                height:300px;
+                margin-bottom:1em;
+                border-radius:3px;
+                color:#222;
+            }
+            input[type=text] {
+                margin-bottom:1em;
+                border-radius:3px;
+                box-shadow:none;
+                color:#222;
+                border:solid 2px #fff;
+            }
+            button {
+                border-radius:3px;
+                background-color:green;
+                border:solid 2px green;
+                margin-left:5px;
+                outline:0;
+            }
+            button:active {
+                outline:0;
+            }
+            #cont {
+                margin:1em;
+            }
+            #title {
+                font-size:26px;
+            }
+            #title span {
+                color:#f00;
+            }
+            #output {
+                color:#f90;
+                margin-top:0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="cont">
+        <p id="title">Reg<span>[</span>ula<span>]</span>r<br>Ex<span>[</span>press<span>]</span>ion<br>Tester</p>
+            <form onsubmit="runRegex()" action="javascript:void(0);" autocomplete="off">
+                <label for="regTxt">Regular expression</label>
+                <textarea id="regTxt"></textarea>
+                <label for="modifier">Modifier</label>
+                <input id="modifier" type="text" />
+                <label for="txt">Text to check</label>
+                <input type="text" id="txt" />
+                <button type="submit" onclick="runRegex()">Run regex</button>
+                <p id="output"></p>
+            </form>
+        </div>
+        <script type="text/javascript">
+            let _def = "^(?=.{6,12}$)(?=.*[0-9])(?=.*[a-zA-ZÀ-ÖØ-ßŸà-çа-яА-ЯЁёè-ÿ\u0600-\u06FF\u0590-\u05FF])([0-9a-zA-ZÀ-ÖØ-ßŸà-çа-яА-ЯЁёè-ÿ\u0600-\u06FF\u0590-\u05FF!@#$£%^&*(),.?\":{}|<>-]+)$",
+            _mod = "g";
+
+            document.addEventListener("DOMContentLoaded", defaultRegex());
+
+            function defaultRegex() {
+                document.getElementById("regTxt").value = _def;
+                document.getElementById("modifier").value = _mod;
+                document.getElementById("txt").focus();
+            };
+
+            function runRegex() {
+                try{
+                    let reg = new RegExp(document.getElementById("regTxt").value.trim(), document.getElementById("modifier").value.trim()),
+                    text = document.getElementById("txt").value,
+                    para = document.getElementById("output");
+                    if (text) {
+                        para.innerHTML = "Evaluates to " + reg.test(text);
+                    } else {
+                        para.innerHTML = "Nothing to test against";
+                    }
+                }
+                catch (ex) {
+                    para = document.getElementById("output").innerHTML = ex;
+                }
+            };
+        </script>
+    </body>
+</html>
